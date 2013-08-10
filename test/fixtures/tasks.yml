@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  task_start: 2013-06-17 13:53:00
+  task_end: 2013-06-17 13:53:00
+  task_type: MyString
+  notes: MyText
+
+two:
+  name: MyString
+  task_start: 2013-06-17 13:53:00
+  task_end: 2013-06-17 13:53:00
+  task_type: MyString
+  notes: MyText

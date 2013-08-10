@@ -1,0 +1,39 @@
+    <div class="container">
+      <div class="hero-unit hidden-phone">
+        <h1>Almost as good as&nbsp;</h1>
+        <h1>Pen &amp; Paper</h1>
+        <p>Time Management that anyone can stick to.</p>
+        <p> 
+        <% new_user_registration_path %>
+        <%= button_to "Sign Up!", new_user_registration_path,
+              :class => "btn btn-large btn-inverse", :method => :get %>
+        </p>
+      </div><!--/ hero-unit hidden-phone-->
+      <a class="btn btn-large btn-primary btn-block visible-phone" href="/users/sign_up"><span class="btn-label">Sign Up Today!</span></a>
+      <div>
+        <div class="span4">
+          <div class="well">
+            <h3>Its a to-do list</h3>
+            <p>Like so many out there. But a wee bit different. Different it a good way
+              </p>
+            <a class="btn btn-primary" href="#"><span class="btn-label">Find Out More</span></a> 
+          </div><!--/ well-->
+        </div>
+        <div class="span4">
+          <div class="well">
+            <h3>Something</h3>
+            <p>Something, something, and indeed something!</p>
+            <a class="btn btn-info"
+            href="#"><span class="btn-label">Find Out More</span></a> 
+          </div>
+        </div>
+        <div class="span4">
+          <div class="well">
+            <h3>Apps are on the way</h3>
+            <p>Mobile apps with the same super-simple, clean interface are in development.
+              As is a command-line app.</p>
+            <a class="btn btn-success" href="#"><span class="btn-label">Find Out More</span></a> 
+          </div>
+        </div>
+      </div>
+    </div>
