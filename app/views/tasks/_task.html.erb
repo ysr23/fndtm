@@ -4,46 +4,39 @@
   <td data-toggle="collapse" data-target="#demo<%= task.id %>">
     <h3><%= task.name %> </h3>
   </td>
-  <td>
-    <% if task.completed%>
-      <%= check_box_tag 'uncomplete-cb', '', true, {'data-href' => ''} %>
-    <% else %> 
-      <%= check_box_tag 'complete-cb', '', false, {'data-href' => ''} %>
-    <% end %>
-  </td>
   <td> 
+    <div id="complete_icon_<%= task.id %>">
     <% if task.completed%>
-      <%= link_to '', { id: task.id, action: "set_uncomplete" }, :class => "icon-check icon-3x", :method => :post %> 
+        <%= render 'set_uncomplete', :task => task  %>
     <% else %> 
-      <%= link_to '', { id: task.id, action: "set_complete" }, class: "icon-check-empty icon-3x", :method => :post %> 
+        <%= render 'set_complete', :task => task  %>
     <% end %> 
+    </div"            
   </td>
   <td>
     <%= link_to t('.edit', :default => ''),
-      edit_task_path(task), :class => "btn icon-pencil"%>
+      edit_task_path(task), :class => "btn icon-pencil" %>
   </td>
   <td>
-    <%= link_to "(remove)", task, method: :delete, data: {confirm: "Are you sure?"}, remote: true %>
-  </td>
-  <td>
-    <%= link_to t('.destroy', :default => '' ), task_path(task),
+    <%= link_to "", 
+      task, 
+      method: :delete, 
+      data: {confirm: "Sure?"}, 
       :class => "btn icon-trash",
-      :method => :delete, 
-      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm",
-      :default => 'Are you sure?') ), remote: true } %>
-                                                     </td>
-                                                   </tr>
-                                                   <tr>
-                                                     <td class="more"></td>
-                                                     <td colspan="5" class="more">
-                                                       <div id="demo<%= task.id %>" class="collapse">
-                                                         <table>
-                                                           <%= task.task_start.to_s(:short) if task.task_start %>
-                                                           <%= time_ago_in_words(task.created_at) + " ago" %>
-                                                           </p>
-                                                           <%= task.notes %>
-                                                         </table>
-                                                       </div>
-                                                     </td>
-                                                   </td>
-                                                 </tr>
+      remote: true %>
+  </td>
+</tr>
+<tr id = row_more_<%= task.id %>
+<td class="more"></td>
+ <td colspan="5" class="more">
+   <div id="demo<%= task.id %>" class="collapse">
+     <table>
+       <%= task.task_start.to_s(:short) if task.task_start %>
+       <%= time_ago_in_words(task.created_at) + " ago" %>
+       </p>
+       <%= task.notes %>
+     </table>
+   </div>
+ </td>
+</td>
+</tr>

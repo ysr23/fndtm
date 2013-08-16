@@ -72,13 +72,19 @@ class TasksController < ApplicationController
   def set_complete
     @task = current_user.tasks.find(params[:id])
     @task.update_attributes(:completed_at => Time.now, :completed => true)
-    redirect_to :action => "index" 
+    respond_to do |format| 
+      format.html { redirect_to :action => "index" }
+      format.js 
+    end
   end
 
   def set_uncomplete
     @task = current_user.tasks.find(params[:id])
     @task.update_attributes(:completed_at => nil, :completed => false)
-    redirect_to :action => "index" 
+    respond_to do |format| 
+      format.html { redirect_to :action => "index" }
+      format.js 
+    end
  end
 
   # PUT /tasks/1
@@ -101,7 +107,6 @@ class TasksController < ApplicationController
   def destroy
     @task = current_user.tasks.find(params[:id])
     @task.destroy
-
     respond_to do |format|
       format.html { redirect_to tasks_url }
       format.json { head :no_content }

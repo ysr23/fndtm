@@ -21,6 +21,7 @@ group :assets do
   gem 'twitter-bootstrap-rails'
   gem 'less-rails'
   gem 'therubyracer'
+  gem 'jquery-ui-rails'
 end
 group :development do
   gem 'pry'

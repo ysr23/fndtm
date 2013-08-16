@@ -1,0 +1,2 @@
+ $('tr#row_<%= @task.id %>').attr("class", "success complete");
+ $('div#complete_icon_<%= @task.id %>').html('<%= j render 'set_uncomplete', :task => @task %>');

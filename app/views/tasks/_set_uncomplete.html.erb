@@ -1,0 +1,6 @@
+<%= link_to '', { id: task.id, action: "set_uncomplete" }, 
+:class => "icon-check icon-3x", 
+:method => :post,
+:id => task.id, 
+remote: true
+%>

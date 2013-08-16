@@ -1,0 +1,3 @@
+$('tr#row_<%= @task.id %>').hide("puff").delay( 800 ).queue(function(){$(this).remove();});
+$('tr#row_more_<%= @task.id %>').hide("puff").delay( 800 ).queue(function(){$(this).remove();});
+/* alert(<%= @task.id %>); */

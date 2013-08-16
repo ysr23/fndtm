@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery.ui.effect.all
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require bootstrap-datetimepicker
