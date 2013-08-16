@@ -1,10 +1,5 @@
 <tr id = "row_<%= task.id %>" class="<%= @class_status %>" > 
   <td width="20">
-  </td>
-  <td data-toggle="collapse" data-target="#demo<%= task.id %>">
-    <h3><%= task.name %> </h3>
-  </td>
-  <td> 
     <div id="complete_icon_<%= task.id %>">
     <% if task.completed%>
         <%= render 'set_uncomplete', :task => task  %>
@@ -13,16 +8,21 @@
     <% end %> 
     </div"            
   </td>
+  <td data-toggle="collapse" data-target="#demo<%= task.id %>">
+    <h3><%= task.name %> </h3>
+  </td>
+  <td> 
+  </td>
   <td>
     <%= link_to t('.edit', :default => ''),
-      edit_task_path(task), :class => "btn icon-pencil" %>
+      edit_task_path(task), :class => "icon-pencil icon-3x" %>
   </td>
   <td>
     <%= link_to "", 
       task, 
       method: :delete, 
       data: {confirm: "Sure?"}, 
-      :class => "btn icon-trash",
+      :class => "icon-trash icon-3x",
       remote: true %>
   </td>
 </tr>
