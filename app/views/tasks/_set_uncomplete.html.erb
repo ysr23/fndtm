@@ -1,5 +1,6 @@
+<% size = 'icon-2x' unless size %>
 <%= link_to '', { id: task.id, action: "set_uncomplete" }, 
-:class => "icon-check icon-3x", 
+:class => "icon-check "+ size, 
 :method => :post,
 :id => task.id, 
 remote: true
