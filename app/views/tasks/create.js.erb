@@ -1,1 +1,2 @@
+$('tr#row_new').remove();
 $('#tasksTable tr:first').before('<%= j render(@task) %>').slideUp( 300 ).delay( 800 ).fadeIn( 400 );  

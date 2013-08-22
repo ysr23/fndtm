@@ -1,4 +1,22 @@
-<%= form_for Task.new, remote: true, :html => { :class => 'form-horizontal' } do |f| %> 
-  <%= f.text_field :name, :class => 'text_field' %>
-  <%= f.submit nil, :class => 'btn btn-primary' %>
-<% end %> 
+<tr id = "row_new">
+  <td>
+  </td>
+  <td>
+      <%= form_for Task.new, remote: true, :html => { :class => 'form-horizontal' } do |f| %> 
+        <%= f.hidden_field(:date_from_params, :value => params[:on] )%>
+        <%= f.text_field :name, :class => 'text_field' %>
+      <%= button_tag( :class => "btn-ossim-green") do %>
+          <i class="icon-ok-circle icon-white icon-3x"></i>
+        <% end %>
+        <%= button_tag( :class => "btn-ossim-red", :id => "new_cancel_btn", :type => "button") do %>
+          <i class="icon-remove-circle icon-white icon-3x"></i>
+        <% end %>
+    <% end %> 
+    </td>
+    <td>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+</tr>

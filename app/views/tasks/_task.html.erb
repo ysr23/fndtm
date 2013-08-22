@@ -1,12 +1,14 @@
 <tr id = "row_<%= task.id %>" class="<%= @class_status %>" > 
   <td width="20">
-    <div id="complete_icon_<%= task.id %>">
-    <% if task.completed %>
-      <%= render 'set_uncomplete', :task => task, :size => "icon-3x" %>
-    <% else %> 
-      <%= render 'set_complete', :task => task, :size => "icon-3x" %>
-    <% end %> 
-    </div"            
+    <div class="hider">
+      <div id="complete_icon_<%= task.id %>">
+      <% if task.completed %>
+        <%= render 'set_uncomplete', :task => task, :size => "icon-3x" %>
+      <% else %> 
+        <%= render 'set_complete', :task => task, :size => "icon-3x" %>
+      <% end %> 
+      </div"            
+    <div>  
   </td>
   <td data-toggle="collapse" data-target="#demo<%= task.id %>">
     <h3><%= task.name %> </h3>
@@ -14,16 +16,20 @@
   <td> 
   </td>
   <td>
+    <div class="hider">
     <%= link_to t('.edit', :default => ''),
       edit_task_path(task), :class => "icon-pencil icon-3x" %>
+  </div>
   </td>
   <td>
+    <div class="hider">
     <%= link_to "", 
       task, 
       method: :delete, 
       data: {confirm: "Sure?"}, 
       :class => "icon-trash icon-3x",
       remote: true %>
+    </div>
   </td>
 </tr>
 <tr id = row_more_<%= task.id %>
@@ -34,7 +40,7 @@
        <%= task.task_start.to_s(:short) if task.task_start %>
        <%= time_ago_in_words(task.task_start) + " ago" if task.task_start%>
        </p>
-       <%= task.notes %>
+        <%= task.notes %>
      </table>
    </div>
  </td>

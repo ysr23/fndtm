@@ -16,3 +16,4 @@ $('.task-uncomplete-cb:checkbox').change ->
     type: 'PUT'
     data: { completed: $(this).attr('unchecked') }
     success: -> alert('Task Uncompleted!')
+

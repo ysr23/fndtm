@@ -36,14 +36,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @task }
-    end
-  end
-  def newxx
-    @task = Task.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @task }
+      format.js
     end
   end
 
@@ -55,8 +48,12 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
+    @day_to_view = params[:task][:date_from_params] 
+    params[:task].delete :date_from_params
     @task = Task.new(params[:task])
     @task.user_id = current_user.id
+    @task.task_start = @day_to_view
+    set_times
     respond_to do |format|
       if @task.save
         format.html { flash[:notice] = 'Task was successfully created' and redirect_to action: "index" }
@@ -113,9 +110,9 @@ class TasksController < ApplicationController
       format.js
     end
   end
+
   def tasks_for_day(day)
     @upcoming_tasks = @tasks.select { |task| task.task_start.to_date > Date.today if task.task_start}
-    #@completed_tasks_for_day = @tasks.select {|task| task.completed? where task_completed_at.to_date == day
     @completed_tasks = @tasks.select { |task| task.completed?}
     @uncompleted_tasks = @tasks.select { |task| not task.completed?}
     @uncompleted_tasks = @uncompleted_tasks.select { |task| 
@@ -125,8 +122,6 @@ class TasksController < ApplicationController
         task.task_start.to_date == day if task.task_start
       end
     } 
-    # to_date required below due to: 
-    # http://stackoverflow.com/questions/12811207/comparison-of-date-with-activesupporttimewithzone-failed
     @completed_tasks_for_day = @completed_tasks.select { |task| 
       task.completed_at.to_date == day if task.completed_at
     }
@@ -135,4 +130,19 @@ class TasksController < ApplicationController
     @uncompleted_tasks.sort_by! &:task_start
     @all_tasks = (@uncompleted_tasks + @completed_tasks_for_day)
   end
+
+  def set_times
+    if @task.name
+      nickel = Nickel.parse(@task.name)
+      @task.dev_notes = "Original Message was: '#{@task.name}' "
+      @task.name = nickel.message
+      inst_vars = Task.inst_var(nickel.occurrences[0], @day_to_view)
+      @task.dev_notes << " #{inst_vars}"
+      @task.task_start = "#{inst_vars["start_date"]}".to_datetime
+    else
+      @task.dev_notes = "Something has gone very wrong indeed!"
+    end 
+  end 
+
+
 end
