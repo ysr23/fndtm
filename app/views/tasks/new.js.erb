@@ -1,0 +1,4 @@
+$('#tasksTable tr:first').before('<%= j render "new" %>').slideUp( 300 ).delay( 800 ).fadeIn(400);
+$("#new_cancel_btn").on('click', function(){
+    $('#row_new').remove();
+    });

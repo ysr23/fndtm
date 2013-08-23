@@ -10,7 +10,7 @@
       </div"            
     <div>  
   </td>
-  <td data-toggle="collapse" data-target="#demo<%= task.id %>">
+  <td data-toggle="collapse" data-target="#notes<%= task.id %>">
     <h3><%= task.name %> </h3>
   </td>
   <td> 
@@ -35,13 +35,16 @@
 <tr id = row_more_<%= task.id %>
 <td class="more"></td>
  <td colspan="5" class="more">
-   <div id="demo<%= task.id %>" class="collapse">
-     <table>
+   <div id="notes<%= task.id %>" class="collapse">
+     <div id="notes_left_panel">
        <%= task.task_start.to_s(:short) if task.task_start %>
-       <%= time_ago_in_words(task.task_start) + " ago" if task.task_start%>
-       </p>
-        <%= task.notes %>
-     </table>
+       (<%= time_ago_in_words(task.task_start) + " ago" if task.task_start%>)
+     </div>
+     <div id="notes_contents" >
+       <%= task.notes %>
+     </div>
+     <div id="notes_right_panel">
+     </div>
    </div>
  </td>
 </td>

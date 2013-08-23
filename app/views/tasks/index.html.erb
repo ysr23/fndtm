@@ -1,37 +1,5 @@
 <%- model_class = Task -%>
-<div class="page-header">
-  <%  if params[:on].present? 
-        @day_to_view = params[:on].to_date 
-  else
-    @day_to_view = Date.today
-  end
-%>
-<h1><%= link_to "<i class='icon-circle-arrow-left'></i>".html_safe, tasks_path(:on => @day_to_view - 1.day) %>
-<%=t '.title', :default => @day_to_view.strftime('%a %d %b')  %>
-<%= link_to "<i class='icon-circle-arrow-right'></i>".html_safe, tasks_path(:on => @day_to_view + 1.day) %> 
-<%= link_to "<i class='icon-plus-sign'></i> ".html_safe, new_task_path(:on => @day_to_view), :remote => true %> 
-</h1>
-</div>
-  <table class="table table-hover table-striped table-condensed" >
-  <tbody id="tasksTable" >
-    <%if @all_tasks.count > 0 %>
-      <% @all_tasks.each do |task| %>
-        <% if task.completed? %>
-          <% @class_status="success complete" %>
-        <% elsif task.task_start < Date.today  %>
-          <% @class_status="error" %>
-        <% elsif %>
-          <% @class_status="" %>
-        <% end %>
-        <% @task_instance = task %>
-        <%= render partial: "task", :locals => { :task => task } %>
-      <% end %>
-    <% else %>
-      <tr>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render "index" %>
 
 <% content_for :sideb do %>
   <li class="nav-header">Upcoming</li>
