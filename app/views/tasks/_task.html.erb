@@ -38,7 +38,12 @@
    <div id="notes<%= task.id %>" class="collapse">
      <div id="notes_left_panel">
        <%= task.task_start.to_s(:short) if task.task_start %>
-       (<%= time_ago_in_words(task.task_start) + " ago" if task.task_start%>)
+       (<%= if task.task_start.past? 
+        time_ago_in_words(task.task_start) + " ago" if task.task_start
+            else
+        distance_of_time_in_words_to_now(task.task_start) + " from now" if task.task_start
+            end
+        %>)
      </div>
      <div id="notes_contents" >
        <%= task.notes %>

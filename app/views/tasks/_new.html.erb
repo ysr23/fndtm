@@ -2,21 +2,41 @@
   <td>
   </td>
   <td>
-      <%= form_for Task.new, remote: true, :html => { :class => 'form-horizontal' } do |f| %> 
-        <%= f.hidden_field(:date_from_params, :value => params[:on] )%>
-        <%= f.text_field :name, :class => 'text_field' %>
+    <%= form_for Task.new, remote: true, :html => { :class => 'form-horizontal' } do |f| %> 
+      <%= f.hidden_field(:date_from_params, :value => params[:on] )%>
+      <%= f.text_field :name, :class => 'texty', :style => "width:70%;" %>
+      <div class="moar">    
+        <%= f.text_area :notes, :class => 'texty', :rows => "5", :style => "width:70%" %>
+
+          <div id="datetimepicker1" class="input-append date">
+            <input name=[task[task_start]] data-format="dd/MM/yyyy hh:mm" type="text"
+            value=""  ></input>
+            <span class="add-on">
+              <i  class="icon-calendar">
+              </i>
+            </span>
+          </div>  
+      </div>
       <%= button_tag( :class => "btn-ossim-green") do %>
-          <i class="icon-ok-circle icon-white icon-3x"></i>
-        <% end %>
-        <%= button_tag( :class => "btn-ossim-red", :id => "new_cancel_btn", :type => "button") do %>
-          <i class="icon-remove-circle icon-white icon-3x"></i>
-        <% end %>
+        <i class="icon-ok-circle icon-white icon-3x"></i>
+      <% end %>
+      <%= button_tag( :class => "btn-ossim-red", :id => "new_cancel_btn", :type => "button") do %>
+        <i class="icon-remove-circle icon-white icon-3x"></i>
+      <% end %>
+      <%= button_tag( :class => "btn-moar", :id => 'btn-moar', :type => "button") do %>
+        <i id="btn-moar-icon" class="icon-double-angle-down icon-3x"></i>
+      <% end %> 
     <% end %> 
-    </td>
-    <td>
+  </td>
+  <td>
   </td>
   <td>
   </td>
   <td>
   </td>
 </tr>
+<script>
+  $(function() {
+    $('#datetimepicker1').datetimepicker({ language: 'pt-BR'}); });
+
+</script>

@@ -15,6 +15,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @tasks }
+      format.js
     end
   end
   
@@ -52,8 +53,8 @@ class TasksController < ApplicationController
     params[:task].delete :date_from_params
     @task = Task.new(params[:task])
     @task.user_id = current_user.id
-    @task.task_start = @day_to_view
-    set_times
+    get_dates_and_times
+    #set_times
     respond_to do |format|
       if @task.save
         format.html { flash[:notice] = 'Task was successfully created' and redirect_to action: "index" }
@@ -136,13 +137,33 @@ class TasksController < ApplicationController
       nickel = Nickel.parse(@task.name)
       @task.dev_notes = "Original Message was: '#{@task.name}' "
       @task.name = nickel.message
-      inst_vars = Task.inst_var(nickel.occurrences[0], @day_to_view)
+      inst_vars = Task.inst_var(nickel.occurrences[0], @task.task_start)
       @task.dev_notes << " #{inst_vars}"
       @task.task_start = "#{inst_vars["start_date"]}".to_datetime
     else
       @task.dev_notes = "Something has gone very wrong indeed!"
     end 
   end 
+  
+  def get_dates_and_times
+    # @task.task_start will now be populated by either the
+    # date on the page or the date selected from the dropdown
+    # first choice will be given to the dropdown
+    # now check nickel for a date and or time
+    # then check chromium (because nickel won't find
+    # a time without a date so 'eat chips 9pm' won't work
+    if @task.task_start.nil?
+      nickel = Nickel.parse(@task.name)
+      nickel_inst_vars = Task.inst_var(nickel.occurrences[0]) if nickel.occurrences[0]
+        if nickel_inst_vars
+          @task.task_start = nickel_inst_vars["start_date"]
+        else
+          chronic_time = Chronic.parse(@task.name)
+          chronic_time = chronic_time.strftime("%I:%M%p") if chronic_time  
+          @task.task_start = "#{@day_to_view} #{chronic_time}".to_datetime
+        end
+    end
+  end
 
 
 end

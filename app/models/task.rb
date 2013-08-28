@@ -27,7 +27,7 @@ class Task < ActiveRecord::Base
   @tasks = @tasks.select { |task| task.task_start <= Date.today if task.task_start} 
   end
 
-  def self.inst_var(nickel_array, date)
+  def self.inst_var(nickel_array)
     puts "working:..."
     inst_var_results = [] 
     nickel_array.instance_variables.each { |inst_var| inst_var_results << inst_var.to_s.sub!('@','') }
@@ -38,10 +38,9 @@ class Task < ActiveRecord::Base
       ivh["start_date"] = ivh.fetch("start_date").instance_variable_get("@date") 
       parse_time(ivh)
       ivh["start_date"] = "#{ivh['start_date']} #{ivh['start_time']}"
+      #ivh["start_date"] = "#{ivh['start_date']}"
     else
       parse_time(ivh)  
-       ivh["start_date"] = "#{date} #{ivh['start_time']}"
-       #ivh["start_date"] = "#{Date.today} #{ivh['start_time']}"
     end 
     ivh
   end
