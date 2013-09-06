@@ -132,18 +132,18 @@ class TasksController < ApplicationController
     @all_tasks = (@uncompleted_tasks + @completed_tasks_for_day)
   end
 
-  def set_times
-    if @task.name
-      nickel = Nickel.parse(@task.name)
-      @task.dev_notes = "Original Message was: '#{@task.name}' "
-      @task.name = nickel.message
-      inst_vars = Task.inst_var(nickel.occurrences[0], @task.task_start)
-      @task.dev_notes << " #{inst_vars}"
-      @task.task_start = "#{inst_vars["start_date"]}".to_datetime
-    else
-      @task.dev_notes = "Something has gone very wrong indeed!"
+   def set_timesixx
+      if @task.name
+        nickel = Nickel.parse(@task.name)
+        @task.dev_notes = "Original Message was: '#{@task.name}' "
+        @task.name = nickel.message
+        inst_vars = Task.inst_var(nickel.occurrences[0], @task.task_start)
+        @task.dev_notes << " #{inst_vars}"
+        @task.task_start = "#{inst_vars["start_date"]}".to_datetime
+      else
+        @task.dev_notes = "Something has gone very wrong indeed!"
+      end 
     end 
-  end 
   
   def get_dates_and_times
     # @task.task_start will now be populated by either the
@@ -163,6 +163,30 @@ class TasksController < ApplicationController
           @task.task_start = "#{@day_to_view} #{chronic_time}".to_datetime
         end
     end
+  end
+
+  def nickel_and_chronic_it
+    anystring = (params[:anystring]) 
+    datefromview = (params[:datefromview]) 
+    nickel = Nickel.parse(anystring)
+    nickel_inst_vars = Task.inst_var(nickel.occurrences[0]) if nickel.occurrences[0]
+      if nickel_inst_vars
+        @result =   nickel_inst_vars["start_date"].to_datetime 
+      else
+        chronic_time = Chronic.parse(anystring)
+        chronic_time = chronic_time.strftime("%H:%M") if chronic_time  
+        @result = (datefromview +" "+ chronic_time).to_datetime if chronic_time
+      end
+    respond_to do |format| 
+      format.js 
+    end
+  end
+
+  def set_task_time(date_from_params)
+    default_time = 1
+    t = (Time.now + default_time.hour).strftime("%H,%M") 
+    bits_of_date = date_from_params.to_datetime.strftime("%Y,%m,%d").split(",")
+    bits_of_date << t.split(",")
   end
 
 

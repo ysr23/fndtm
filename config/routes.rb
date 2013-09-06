@@ -6,11 +6,15 @@ Findtime::Application.routes.draw do
   get "static/howto"
 
   devise_for :users
+  resources :users, :only => [:show]
+  resources :users, :only => [:update]
 
   resources :tasks do
     post :set_complete, on: :member
     post :set_uncomplete, on: :member
   end
+
+  match '/timex' => 'tasks#nickel_and_chronic_it' 
 
   root :to => "tasks#index" 
   # The priority is based upon order of creation:

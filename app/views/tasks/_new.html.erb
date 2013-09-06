@@ -4,18 +4,26 @@
   <td>
     <%= form_for Task.new, remote: true, :html => { :class => 'form-horizontal' } do |f| %> 
       <%= f.hidden_field(:date_from_params, :value => params[:on] )%>
-      <%= f.text_field :name, :class => 'texty', :style => "width:70%;" %>
+      <%= f.text_field :name, :id => 'foo', :class => 'texty', :style => "width:70%;" %>
       <div class="moar">    
         <%= f.text_area :notes, :class => 'texty', :rows => "5", :style => "width:70%" %>
-
-          <div id="datetimepicker1" class="input-append date">
-            <input name=[task[task_start]] data-format="dd/MM/yyyy hh:mm" type="text"
-            value=""  ></input>
-            <span class="add-on">
-              <i  class="icon-calendar">
-              </i>
-            </span>
-          </div>  
+        <div id="datetimepicker1" class="input-append date">
+          <label>Date/Time Start</label>
+          <input name="task_start" data-format="dd/MM/yyyy hh:mm" type="text" placeholder="11/11/2006 16:00" value=""></input>
+          <span class="add-on">
+            <i  class="icon-calendar">
+            </i>
+          </span>
+        </div>  
+        <div id="datetimepicker2" class="input-append date hidden">
+          <label>Date/Time End</label>
+          <input name='time_end' data-format="dd/MM/yyyy hh:mm" type="text"
+          value="" placeholder="11/11/2006 16:00" class="dp1" ></input>
+          <span class="add-on">
+            <i  class="icon-calendar">
+            </i>
+          </span>
+        </div>  
       </div>
       <%= button_tag( :class => "btn-ossim-green") do %>
         <i class="icon-ok-circle icon-white icon-3x"></i>
@@ -26,6 +34,11 @@
       <%= button_tag( :class => "btn-moar", :id => 'btn-moar', :type => "button") do %>
         <i id="btn-moar-icon" class="icon-double-angle-down icon-3x"></i>
       <% end %> 
+      <div id="time_will_be"> 
+      <% @bits_of_date = controller.set_task_time(params[:on]) %>
+      <% #foo = controller.nickel_and_chronic_it("hello world tomorrow at 8pm") %>
+      <%= link_to "Work out Dates", 'timex', remote: true %>
+      </div>
     <% end %> 
   </td>
   <td>
@@ -37,6 +50,15 @@
 </tr>
 <script>
   $(function() {
-    $('#datetimepicker1').datetimepicker({ language: 'pt-BR'}); });
+    $("#foo").on('change', function(e){
+      var anystring = $("#foo").val() 
+      var datefromview = "<%= params[:on]%>"
+      $.get("/timex?anystring="+ anystring + "&datefromview=" + datefromview);
+    })
+  });
+  $(function() {
+    $('#datetimepicker1').datetimepicker({ pickSeconds: false, language: 'en-GB'}).on('changeDate',function(e){alert('Changed-bar') }) });
 
+var picker = $('#datetimepicker1').data('datetimepicker');
+picker.setLocalDate(new Date(<%= @bits_of_date[0] %>, <%= @bits_of_date[1] %>, <%= @bits_of_date[2] %>, <%= @bits_of_date[3][0] %>, <%= @bits_of_date[3][1] %>));
 </script>

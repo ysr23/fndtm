@@ -1,0 +1,2 @@
+<% the_text = @result.strftime('Task due on <span class="label label-info">%A %d %b </span> at <span class="label label-info">%l:%M %p</span>') if @result  %>
+$("#time_will_be").html('<%= raw the_text %>');

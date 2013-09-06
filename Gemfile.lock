@@ -63,6 +63,8 @@ GEM
       jquery-rails
       railties (>= 3.1.0)
     json (1.8.0)
+    ledermann-rails-settings (2.0.3)
+      activerecord (~> 3.1)
     less (2.3.2)
       commonjs (~> 0.2.6)
     less-rails (2.3.3)
@@ -157,6 +159,7 @@ DEPENDENCIES
   font-awesome-rails
   jquery-rails
   jquery-ui-rails
+  ledermann-rails-settings
   less-rails
   meta_request
   nickel
