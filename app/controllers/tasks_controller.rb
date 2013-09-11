@@ -88,17 +88,28 @@ class TasksController < ApplicationController
   # PUT /tasks/1
   # PUT /tasks/1.json
   def update
-    @task = current_user.tasks.find(params[:id])
-    respond_to do |format|
-      if @task.update_attributes(params[:task])
-        format.html { redirect_to '/tasks/', notice: 'Task was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+    if params[:elementid]
+      element_split = (params[:elementid]).split('_')
+      @task = current_user.tasks.find(element_split.last)
+      @task.update_attributes(element_split.first => params[:value])
+      respond_to do |format|
+        format.js
+      end
+    else
+      @task = current_user.tasks.find(params[:id])
+      respond_to do |format|
+        if @task.update_attributes(params[:task])
+          format.html { redirect_to '/tasks/', notice: 'Task was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @task.errors, status: :unprocessable_entity }
+          format.js
+        end
       end
     end
   end
+
 
   # DELETE /tasks/1
   # DELETE /tasks/1.json

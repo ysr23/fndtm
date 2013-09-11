@@ -14,6 +14,7 @@ Findtime::Application.routes.draw do
     post :set_uncomplete, on: :member
   end
 
+  match 'tasks/:id/update' => 'tasks#update', :via => :post
   match '/timex' => 'tasks#nickel_and_chronic_it' 
 
   root :to => "tasks#index" 

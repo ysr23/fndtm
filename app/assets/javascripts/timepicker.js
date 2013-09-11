@@ -1,3 +1,6 @@
+ //$(document).ready(function() {
+ //         $('.edit').editable('<%=h link_to "Update", task_path(task), :method => :put %>');
+ //          });
 $(document).on('click', '.btn-moar', function() {
 //var the_class = $(this).
 //alert( "Handler for .click() called."+the_class+"fof" );
