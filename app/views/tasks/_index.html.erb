@@ -26,7 +26,7 @@
           <% @class_status="" %> 
         <% end %> 
         <% @task_instance = task %>
-        <%= render partial: "task", :locals => { :task => task } %> 
+        <%= render partial: "task", :locals => { :tasks => @tasks, :task => task } %> 
       <% end %> 
     <% else %>
       <tr>

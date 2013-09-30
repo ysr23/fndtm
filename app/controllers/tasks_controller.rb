@@ -124,8 +124,10 @@ class TasksController < ApplicationController
   end
 
   def tasks_for_day(day)
+    @tasks = current_user.tasks unless @tasks
     @upcoming_tasks = @tasks.select { |task| task.task_start.to_date > Date.today if task.task_start}
     @completed_tasks = @tasks.select { |task| task.completed?}
+    @completed_tasks = @completed_tasks.sort_by &:completed_at 
     @uncompleted_tasks = @tasks.select { |task| not task.completed?}
     @uncompleted_tasks = @uncompleted_tasks.select { |task| 
       if day == Date.today
@@ -143,18 +145,6 @@ class TasksController < ApplicationController
     @all_tasks = (@uncompleted_tasks + @completed_tasks_for_day)
   end
 
-   def set_timesixx
-      if @task.name
-        nickel = Nickel.parse(@task.name)
-        @task.dev_notes = "Original Message was: '#{@task.name}' "
-        @task.name = nickel.message
-        inst_vars = Task.inst_var(nickel.occurrences[0], @task.task_start)
-        @task.dev_notes << " #{inst_vars}"
-        @task.task_start = "#{inst_vars["start_date"]}".to_datetime
-      else
-        @task.dev_notes = "Something has gone very wrong indeed!"
-      end 
-    end 
   
   def get_dates_and_times
     # @task.task_start will now be populated by either the

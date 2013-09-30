@@ -1,2 +1,3 @@
- $('tr#row_<%= @task.id %>').attr("class", "success complete");
- $('div#complete_icon_<%= @task.id %>').html('<%= j render 'set_uncomplete', :task => @task %>');
+$('tr#row_<%= @task.id %>').attr("class", "success complete");
+$('#RH_completed tbody tr:first').before('<tr><td><div id="complete_icon_<%= @task.id %>" class="hider"><%= j render 'set_uncomplete', :task => @task, :size => "icon-1x" %></div></td><td><%= @task.name %></td></td></tr>');
+$('div#complete_icon_<%= @task.id %>').html('<%= j render 'set_uncomplete', :task => @task %>');

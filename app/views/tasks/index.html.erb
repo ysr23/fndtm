@@ -1,16 +1,16 @@
 <%- model_class = Task -%>
 <div id="todays_tasks">
-<%= render "index" %>
+  <%= render "index", :tasks => @tasks %>
 </div>
 <% content_for :sideb do %>
   <li class="nav-header">Upcoming</li>
-  
+
   <table id="tasksTable" class="table table-hover table-striped table-condensed">
     <tbody>
       <% @upcoming_tasks.last(5).sort {|a,b| a.task_start <=> b.task_start}.each_with_index do |task| %>
         <tr>
-          <td class="hider">
-            <div id="complete_icon_<%= task.id %>">
+          <td>
+            <div id="complete_icon_<%= task.id %>" class="hider">
               <% if task.completed%> 
                 <%= render 'set_uncomplete', :task => task, :size => "icon-2x" %>
               <% else %> 
@@ -19,7 +19,11 @@
             </div>
           </td>
           <td><%= link_to task.name, task_path(task) %></td>
-          <td class="hider"><%= distance_of_time_in_words_to_now(task.task_start.to_datetime) + " from now"if task.task_start %></td>
+          <td> 
+            <div class="hider">
+              <%= distance_of_time_in_words_to_now(task.task_start.to_datetime) + " from now"if task.task_start %>
+            </div> 
+          </td>
         </tr>
       <% end %>
     </tbody>
@@ -31,17 +35,23 @@
     <tbody>
       <% @completed_tasks.last(5).sort {|a,b| b.completed_at <=> a.completed_at}.each_with_index do |task| %>
         <tr>
-          <td class="hider">
-            <div id="complete_icon_<%= task.id %>">
+          <td>
+            <div id="complete_icon_<%= task.id %>" class="hider">
               <% if task.completed%> 
-                <%= render 'set_uncomplete', :task => task, :size => "icon-2x" %>
+                <%= render 'set_uncomplete', :task => task, :size => "icon-1x" %>
               <% else %> 
-                <%= render 'set_complete', :task => task, :size => "icon-2x" %> 
+                <%= render 'set_complete', :task => task, :size => "icon-1x" %> 
               <% end %> 
+              <%= link_to "",
+                task,
+                method: :delete,
+                data: {confirm: "Sure?"},
+                :class => "icon-trash icon",
+                remote: true %>
             </div>
           </td>
           <td><%= link_to task.name, task_path(task) %></td>
-          <td class="hider"><%= time_ago_in_words(task.completed_at) + " ago" %></td>
+          <td><div class="hider"><%= time_ago_in_words(task.completed_at) + " ago" %></div></td>
         </tr>
       <% end %>
     </tbody>

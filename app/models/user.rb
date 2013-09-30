@@ -9,15 +9,5 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
   has_many :tasks
-  has_settings do |s|
-    s.key :task, :defaults => { :new_task_entry => '1', :end_of_day => '1800',
-                                :start_of_day => '800', :duration => '1'                             
-     }
-  end
-  def update
-    binding.pry
-    @setting = User.settings(:task)
-    current_user.settings(:task).(params[:option])
-  end
 
 end
